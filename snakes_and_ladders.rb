@@ -98,6 +98,6 @@ if __FILE__ == $0
     puts "OK"
   else
     puts "You broke the game"
-    puts Diffy::Diff.new(@expected.join("\n"), @output.join("\n"))
+    puts Diffy::Diff.new(@expected.join("\n") + "\n", @output.join("\n") + "\n")
   end
 end
