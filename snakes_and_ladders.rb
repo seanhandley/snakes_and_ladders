@@ -1,4 +1,23 @@
 module SnakesAndLadders
+  class Player
+    attr_reader :position, :name, :logger
+
+    def initialize(name, logger)
+      @name = name
+      @position = 1
+      @logger = logger
+    end
+
+    def move_by(spaces)
+      logger.call("🎲 Player #{name} rolled #{spaces}! Moves from #{position} to #{position + spaces}.")
+      @position += spaces
+    end
+
+    def move_to(new_position)
+      @position = new_position
+    end
+  end
+
   class Game
     def initialize(snakes: default_snakes,
                    ladders: default_ladders,
@@ -8,7 +27,7 @@ module SnakesAndLadders
                    logger: -> (message) { puts message })
       @snakes = snakes
       @ladders = ladders
-      @player_positions = (1..player_count).to_h { |e| [e, 1] }
+      @players = (1..player_count).map { |n| Player.new(n, logger) }
       @dice = dice
       @logger = logger
       @board_size = board_size
@@ -16,7 +35,7 @@ module SnakesAndLadders
 
     def play
       tick = 0
-      player_positions.keys.cycle do |player|
+      players.cycle do |player|
         roll(player)
         check_snakes(player)
         check_ladders(player)
@@ -26,40 +45,31 @@ module SnakesAndLadders
 
     private
 
-    attr_reader :snakes, :ladders, :dice, :logger, :board_size
-    attr_accessor :player_positions
+    attr_reader :snakes, :ladders, :dice, :logger, :board_size, :players
 
     def roll(player)
-      roll = dice.call
-
-      log("🎲 Player #{player} rolled #{roll}! Moves from #{player_positions[player]} to #{player_positions[player] + roll}.")
-
-      player_positions[player] += roll
+      player.move_by(dice.call)
     end
 
     def check_snakes(player)
-      if snakes.keys.include?(player_positions[player])
-        log("🐍 Player #{player} hit a snake! Moves from #{player_positions[player]} to #{snakes[player_positions[player]]}.")
-        player_positions[player] = snakes[player_positions[player]]
+      if snakes.keys.include?(player.position)
+        logger.call("🐍 Player #{player.name} hit a snake! Moves from #{player.position} to #{snakes[player.position]}.")
+        player.move_to(snakes[player.position])
       end
     end
 
     def check_ladders(player)
-      if ladders.keys.include?(player_positions[player])
-        log("🪜 Player #{player} hit a ladder! Moves from #{player_positions[player]} to #{ladders[player_positions[player]]}.")
-        player_positions[player] = ladders[player_positions[player]]
+      if ladders.keys.include?(player.position)
+        logger.call("🪜 Player #{player.name} hit a ladder! Moves from #{player.position} to #{ladders[player.position]}.")
+        player.move_to(ladders[player.position])
       end
     end
 
     def check_winner(player, tick)
-      if player_positions[player] >= board_size
-        log("🏆 Player #{player} wins after #{tick} rounds!")
+      if player.position >= board_size
+        logger.call("🏆 Player #{player.name} wins after #{tick} rounds!")
         true
       end
-    end
-
-    def log(message)
-      logger.call(message)
     end
 
     def default_player_count
