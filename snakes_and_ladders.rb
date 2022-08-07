@@ -4,7 +4,7 @@ module SnakesAndLadders
                    ladders: default_ladders,
                    player_count: default_player_count,
                    board_size: 100,
-                   dice: -> { rand(1...12) },
+                   dice: -> { rand(2..12) },
                    logger: -> (message) { puts message })
       @snakes = snakes
       @ladders = ladders
@@ -89,6 +89,7 @@ module SnakesAndLadders
 end
 
 if __FILE__ == $0
+  # SnakesAndLadders::Game.new.play && exit
   require "diffy"
   @output = []
   @expected = ["🎲 Player 1 rolled 4! Moves from 1 to 5.", "🎲 Player 2 rolled 4! Moves from 1 to 5.", "🎲 Player 3 rolled 4! Moves from 1 to 5.", "🎲 Player 4 rolled 4! Moves from 1 to 5.", "🎲 Player 1 rolled 4! Moves from 5 to 9.", "🎲 Player 2 rolled 4! Moves from 5 to 9.", "🎲 Player 3 rolled 4! Moves from 5 to 9.", "🎲 Player 4 rolled 4! Moves from 5 to 9.", "🎲 Player 1 rolled 4! Moves from 9 to 13.", "🎲 Player 2 rolled 4! Moves from 9 to 13.", "🎲 Player 3 rolled 4! Moves from 9 to 13.", "🎲 Player 4 rolled 4! Moves from 9 to 13.", "🎲 Player 1 rolled 4! Moves from 13 to 17.", "🎲 Player 2 rolled 4! Moves from 13 to 17.", "🎲 Player 3 rolled 4! Moves from 13 to 17.", "🎲 Player 4 rolled 4! Moves from 13 to 17.", "🎲 Player 1 rolled 4! Moves from 17 to 21.", "\u{1FA9C} Player 1 hit a ladder! Moves from 21 to 42.", "🎲 Player 2 rolled 4! Moves from 17 to 21.", "\u{1FA9C} Player 2 hit a ladder! Moves from 21 to 42.", "🎲 Player 3 rolled 4! Moves from 17 to 21.", "\u{1FA9C} Player 3 hit a ladder! Moves from 21 to 42.", "🎲 Player 4 rolled 4! Moves from 17 to 21.", "\u{1FA9C} Player 4 hit a ladder! Moves from 21 to 42.", "🎲 Player 1 rolled 4! Moves from 42 to 46.", "🎲 Player 2 rolled 4! Moves from 42 to 46.", "🎲 Player 3 rolled 4! Moves from 42 to 46.", "🎲 Player 4 rolled 4! Moves from 42 to 46.", "🎲 Player 1 rolled 4! Moves from 46 to 50.", "\u{1FA9C} Player 1 hit a ladder! Moves from 50 to 67.", "🎲 Player 2 rolled 4! Moves from 46 to 50.", "\u{1FA9C} Player 2 hit a ladder! Moves from 50 to 67.", "🎲 Player 3 rolled 4! Moves from 46 to 50.", "\u{1FA9C} Player 3 hit a ladder! Moves from 50 to 67.", "🎲 Player 4 rolled 4! Moves from 46 to 50.", "\u{1FA9C} Player 4 hit a ladder! Moves from 50 to 67.", "🎲 Player 1 rolled 4! Moves from 67 to 71.", "\u{1FA9C} Player 1 hit a ladder! Moves from 71 to 92.", "🎲 Player 2 rolled 4! Moves from 67 to 71.", "\u{1FA9C} Player 2 hit a ladder! Moves from 71 to 92.", "🎲 Player 3 rolled 4! Moves from 67 to 71.", "\u{1FA9C} Player 3 hit a ladder! Moves from 71 to 92.", "🎲 Player 4 rolled 4! Moves from 67 to 71.", "\u{1FA9C} Player 4 hit a ladder! Moves from 71 to 92.", "🎲 Player 1 rolled 4! Moves from 92 to 96.", "🎲 Player 2 rolled 4! Moves from 92 to 96.", "🎲 Player 3 rolled 4! Moves from 92 to 96.", "🎲 Player 4 rolled 4! Moves from 92 to 96.", "🎲 Player 1 rolled 4! Moves from 96 to 100.", "🏆 Player 1 wins after 37 rounds!"]
